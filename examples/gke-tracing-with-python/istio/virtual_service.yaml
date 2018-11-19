@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: webapp
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - webapp
+  http:
+  - match:
+    - uri:
+        exact: /
+  - match:
+    - uri:
+        exact: /istio
+  - match:
+    - uri:
+        exact: /opencensus
+  route:
+  - destination:
+      host: webapp.default.svc.cluster.local
+      port:
+        number: 8080
+        

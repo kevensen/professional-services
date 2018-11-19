@@ -1,0 +1,3 @@
+rbac-setup.yml
+prometheus-service.yml
+kube-state-metrics/
