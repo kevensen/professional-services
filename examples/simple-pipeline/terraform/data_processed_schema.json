@@ -1,0 +1,8 @@
+[
+    {
+      "description": "The processed data.",
+      "name": "data",
+      "type": "INT64",
+      "mode": "REPEATED"
+    }
+]

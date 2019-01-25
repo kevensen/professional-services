@@ -1,0 +1,8 @@
+[
+    {
+      "description": "The message payload if streaming.",
+      "name": "payload",
+      "type": "INT64",
+      "mode": "NULLABLE"
+    }
+]
