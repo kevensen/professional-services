@@ -24,15 +24,26 @@
  * @param {function} callback The callback function.
  */
 
+const BigQuery = require('@google-cloud/bigquery');
+const projectId = process.env.GCLOUD_PROJECT;
+/**
+ * Creates the client.  By declaring this client as a global constant, it is declared
+ * only once per function instance and is shared among invocations.  Doing so is especially
+ * important for network connections and connections to other resources.
+ 
+ * https://cloud.google.com/functions/docs/bestpractices/tips#use_global_variables_to_reuse_objects_in_future_invocations
+ */
+const bigquery = new BigQuery({
+    projectId: projectId,
+  });
 
 exports.injestPubSub = (event, callback) => {
   
   // Imports the Google Cloud client library
-  const BigQuery = require('@google-cloud/bigquery');
   console.log(`received message ${JSON.stringify(event)}`);
   
   // Your Google Cloud Platform project ID
-  var projectId = process.env.GCLOUD_PROJECT;
+  
   var pubsubMessage = event.data;
   var data = pubsubMessage.data ? Buffer.from(pubsubMessage.data, 'base64').toString() : 0;
   var data_int = parseInt(data, 10);
@@ -41,11 +52,6 @@ exports.injestPubSub = (event, callback) => {
     "payload": data_int,
 	};
   
-  // Creates a client
-  const bigquery = new BigQuery({
-    projectId: projectId,
-  });
-        
   bigquery
   .dataset(process.env.DATASET)
   .table(process.env.TABLE)
